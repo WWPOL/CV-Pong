@@ -1,44 +1,35 @@
-
 ball = {
-	r: 50
-	x: 0,
-	y: 0,
-	z: 0,
-	vx: 0,
-	vy: 0,
-	vz: 0
+    r: 50
+    x: 0,
+    y: 0,
+    z: 2560,
+    vx: 1,
+    vy: .8,
+    vz: 2
+};
+
+paddle0 = {
+    x: 0,
+    y: 0,
+    z: 0
 };
 
 paddle1 = {
-	x: 0,
-	y: 0
-};
-
-paddle2 = {
-	x: 0,
-	y: 0
+    x: 0,
+    y: 0,
+    z: 2560
 };
 
 
 var update = function() {
-    performPhysics();
-
+    if ((ball.z+ball.r == paddle0.z-20 && ball.vz > 0) || (ball.z-ball.r == paddle1.z+20 && ball.vz < 0)) {
+        // Reverse direction.
+        ball.zVel *= -1.1;
+    }
     ball.x += ball.vx;
     ball.y += ball.vy;
     ball.z += ball.vz;
 
     // io.emit("BallData", gameData);
     setTimeout(update, 15);
-}
-
-var performPhysics = function() {
-    console.log("Beginning physics pass..."); 
-    // ball.x += ball.xVel;
-    // ball.y += ball.yVel;
-    // ball.z += ball.zVel;
-
-    if (ball.z == paddle0.z || ball.z == paddle1.z) {
-        // Reverse direction.
-        ball.zVel *= -1;
-    }
 }
