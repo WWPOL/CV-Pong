@@ -1,6 +1,5 @@
 import  pyglet
 from pyglet.window import key
-from pyglet.window import mouse
 
 # Internal imports.
 from objects import Stage
@@ -20,12 +19,6 @@ def start_match():
 def on_key_press(symbol, modifier):
     if symbol == key.ESCAPE:
         pyglet.app.exit()
-
-
-@window.event
-def on_mouse_motion(x,y,dx,dy):
-	print(str(x) + ", " + str(y))
-	pass
 
 @window.event
 def on_draw():

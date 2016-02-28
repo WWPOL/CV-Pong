@@ -21,7 +21,7 @@ def draw_circle(cx, cy, cz, r, num_segments):
 def graphics_render():
     glClear(GL_COLOR_BUFFER_BIT)
     glLoadIdentity()
-    glTranslatef(0,0,-5)
+    glTranslatef(0,0,-565)
     draw_circle(0,0,0,1,30)
     draw_circle(4,0,-3,1,30)
 
