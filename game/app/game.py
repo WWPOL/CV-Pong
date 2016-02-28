@@ -23,7 +23,7 @@ def start_match():
     player2 = Player()
 
 def render(self):
-    graphics_render(hand, stage.paddle0)
+    graphics_render(hand, stage)
 
 @window.event
 def on_draw():

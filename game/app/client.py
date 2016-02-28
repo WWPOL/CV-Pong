@@ -18,10 +18,9 @@ class ClientSession():
     
     def on_ball_data(self, *args):
         print(args[0])
-        pass 
 
     def on_opponent_paddle(self, *args):
-        print(json.loads(args[0]))
+        print(args[0])
     
     def send_coordinates(self, *args):
         self.mainSocket.emit('UpdatePaddle', json.dumps({"x": self.connection.stage.paddle0.x, "y": self.connection.stage.paddle0.y}))

@@ -17,7 +17,7 @@ io.on('connection', function(socket) {
 
     update();
 
-    idToUser[socket.id] = users.length;
+    idToUser[socket.id] = users.length - 1;
             
     socket.on("Ready", function() {
         userReadyStates[socket.id] = true;
@@ -39,7 +39,11 @@ io.on('connection', function(socket) {
         userNumber = idToUser[socket.id];
         // Fuck my life.
         console.log(userNumber + ":" +  data);
-        io.to(users[idToUser[socket.id] - 1 % 2]).emit("OpponentPaddle", data);
+        if (userNumber == 0) {
+            io.to(users[1]).emit("OpponentPaddle", data);
+        } else {
+            io.to(users[0]).emit("OpponentPaddle", data);
+        }
     });
 
     socket.on("disconnect", function() {
