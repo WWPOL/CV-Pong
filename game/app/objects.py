@@ -1,4 +1,5 @@
 from physics import Vector 
+import math
 
 class Ball:
     def __init__(self, position, velocity, acceleration, radius):
@@ -8,13 +9,16 @@ class Ball:
         self.radius = radius
     def update(self, stage):
         self.velocity.add(self.acceleration)
+        self.acceleration = Vector(0,0,0)
         self.position.add(self.velocity)
         if(((self.position.z + self.radius)  > stage.paddle0.z - 20 and (self.velocity.z > 0))):
             if(self.position.x > stage.paddle0.x - stage.paddle0.WIDTH/2 and self.position.x < stage.paddle0.x + stage.paddle0.WIDTH/2 and self.position.y > stage.paddle0.y - stage.paddle0.HEIGHT/2 and self.position.x < stage.paddle0.y + stage.paddle0.HEIGHT/2):
                 self.velocity.z *= -1.1
+                if math.abs(stage.paddle0.vx) > 10:
+                    self.acceleration.x = -1*stage.paddle0.vx
             else:
                 self.velocity.z = 50
-                self.position = Vector(0,0,-500)
+                self.position = Vector(0,0,-1000)
         if (self.position.z -self.radius) < stage.paddle1.z + 20 and (self.velocity.z < 0):
             self.velocity.z *= -1.1
         if(((self.position.x - self.radius) < -640 and self.velocity.x < 0) or (self.position.x + self.radius) > 640 and self.velocity.x > 0):
