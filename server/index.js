@@ -38,6 +38,7 @@ io.on('connection', function(socket) {
     socket.on("UpdatePaddle", function(data) {
         userNumber = idToUser[socket.id];
         // Fuck my life.
+        console.log(data);
         io.to(users[idToUser[socket.id] - 1 % 2]).emit("OpponentPaddle", data);
     });
 
@@ -65,14 +66,14 @@ var update = function() {
     //setTimeout(update, 15);
 }
 
-//var performPhysics = function() {
-//        console.log("Beginning physics pass..."); 
-//        ball.x += ball.xVel;
-//        ball.y += ball.yVel;
-//        ball.z += ball.zVel;
-//    
-//        if (ball.z == paddle0.z || ball.z == paddle1.z) {
-//            // Reverse direction.
-//            ball.zVel *= -1;
-//        }
-//    }
+var performPhysics = function() {
+        console.log("Beginning physics pass..."); 
+        ball.x += ball.xVel;
+        ball.y += ball.yVel;
+        ball.z += ball.zVel;
+    
+        if (ball.z == paddle0.z || ball.z == paddle1.z) {
+            // Reverse direction.
+            ball.zVel *= -1;
+        }
+    }

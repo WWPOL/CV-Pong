@@ -18,8 +18,8 @@ class ClientSession():
         pass 
     
     def send_coordinates(self, *args):
-        self.mainSocket.emit('UpdatePaddle', self.connection.stage.paddle0.x,
-                self.connection.stage.paddle0.y)
+        self.mainSocket.emit('UpdatePaddle',
+                "x:%s,y:%s" % (str(self.connection.stage.paddle0.x), str(self.connection.stage.paddle0.y)))
     
     def start(self):
         self.mainSocket = SocketIO('localhost', 8888)
