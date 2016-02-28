@@ -127,12 +127,16 @@ def draw_stage():
     glVertex3d(-640,-360,-2560)
     glEnd()
 
-def graphics_render():
+def graphics_render(hand, paddle):
     glClear(GL_COLOR_BUFFER_BIT)
     glLoadIdentity()
     glTranslatef(0,0,-565)
+
+    position, velocity = hand.captureImage()
+    paddle.x = (position[0] * 2) - 640
+    paddle.y = 360 - int(position[1] * 1.5)
     draw_stage()
-    draw_paddle(Paddle(0))
+    draw_paddle(paddle)
 
 def graphics_resize(width, height):
     glViewport(0, 0, width, height)

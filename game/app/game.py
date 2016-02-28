@@ -9,10 +9,12 @@ from physics import Vector
 from meta import Player
 from graphics import graphics_render
 from graphics import graphics_resize
-from hand_detection_test import *
+from hand import HandJob
 
 window = pyglet.window.Window(width=1280, height=720)
-setup_camera()
+hand = HandJob()
+
+paddle = Paddle(0)
 
 def start_match():
     player1 = Player()
@@ -20,9 +22,7 @@ def start_match():
     stage = Stage()
 
 def render(self):
-	graphics_render(paddle,mouseX, mouseY)
-	update_hand()
-
+    graphics_render(hand, paddle)
 
 @window.event
 def on_draw():
