@@ -38,7 +38,7 @@ io.on('connection', function(socket) {
     socket.on("UpdatePaddle", function(data) {
         userNumber = idToUser[socket.id];
         // Fuck my life.
-        console.log(data);
+        console.log(userNumber + ":" +  data);
         io.to(users[idToUser[socket.id] - 1 % 2]).emit("OpponentPaddle", data);
     });
 
