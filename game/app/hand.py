@@ -56,8 +56,8 @@ class HandJob:
 
 	def getContourMoment(self, contour):
 		m = cv2.moments(contour)
-		cx = int(m['m10']/m['m00'])
-		cy = int(m['m01']/m['m00'])
+		cx = int(m['m10']/(m['m00']+0.01)) # add 0.01 to prevent division by 0 errors
+		cy = int(m['m01']/(m['m00']+0.01))
 		return [cx, cy]
 
 	def captureImage(self):
