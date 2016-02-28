@@ -5,6 +5,7 @@ from pyglet.window import key
 from objects import Stage
 from physics import Vector
 from meta import Player
+from graphics import graphics_render
 
 window = pyglet.window.Window(width=1280, height=720)
 
@@ -20,11 +21,7 @@ def on_key_press(symbol, modifier):
 
 @window.event
 def on_draw():
-    glClear(GL_COLOR_BUFFER_BIT)
-    glLoadIdentity()
-    glTranslatef(0,0,-5)
-    drawCircle(0,0,0,1,30)
-    drawCircle(4,0,-3,1,30)
+    grahpics_render()
 
 @window.event
 def on_resize(width, height):
