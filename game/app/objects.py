@@ -15,6 +15,8 @@ class Ball:
                 self.velocity.z *= -1.1
                 if math.fabs(stage.paddle0.vx) > 10:
                     self.acceleration.x = -1*stage.paddle0.vx/35
+                if math.fabs(stage.paddle0.vy) > 10:
+                    self.acceleration.y = -1*stage.paddle0.vy/35
             else:
                 self.velocity = Vector(0,0,50)
                 self.position = Vector(0,0,-1000)
