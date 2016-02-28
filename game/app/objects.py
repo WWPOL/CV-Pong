@@ -18,7 +18,7 @@ class Paddle:
     def __init__(self, player_index):
         self.x = 0
         self.y = 0
-        if player_index = 0:
+        if player_index == 0:
             self.z = 0
         else:
             self.z = Stage.DEPTH
