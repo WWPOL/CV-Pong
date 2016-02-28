@@ -6,6 +6,7 @@ class Connection():
     def __init__(self, stage, ip):
         self.stage = stage
         self.ip = ip
+        print(self.ip)
 
 class ClientSession():
     def __init__(self, connection):
