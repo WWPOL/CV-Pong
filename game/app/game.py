@@ -26,8 +26,8 @@ def on_draw():
 
 @window.event
 def on_resize(width, height):
-    graphics_resize(width, height)
+    return graphics_resize(width, height)
 
-client.establish()
-start_match()
+#client.establish()
+#start_match()
 pyglet.app.run()

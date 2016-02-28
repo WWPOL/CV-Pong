@@ -1,6 +1,10 @@
 import math
 import pyglet
 from pyglet.gl import *
+from objects import Ball
+from objects import Paddle
+from physics import Vector
+
 def draw_circle(ball):
     num_segments = 30
     angle = 2 * math.pi / float(num_segments)
@@ -19,19 +23,124 @@ def draw_circle(ball):
         y*=radial
     glEnd()
 
+def draw_paddle(paddle):
+    z = 0;
+    if(paddle.z == 0):
+        z = (paddle.z - paddle.DEPTH/2)
+    else:
+        z = (paddle.z + paddle.DEPTH/2)
+
+    glBegin(GL_QUADS)
+    #FRONT
+    glVertex3d(paddle.x - (paddle.WIDTH/2), paddle.y + (paddle.HEIGHT/2), z + (paddle.DEPTH/2))
+    glVertex3d(paddle.x + (paddle.WIDTH/2), paddle.y + (paddle.HEIGHT/2), z + (paddle.DEPTH/2))
+    glVertex3d(paddle.x + (paddle.WIDTH/2), paddle.y - (paddle.HEIGHT/2), z + (paddle.DEPTH/2))
+    glVertex3d(paddle.x - (paddle.WIDTH/2), paddle.y - (paddle.HEIGHT/2), z + (paddle.DEPTH/2))
+    #BACK
+    glVertex3d(paddle.x - (paddle.WIDTH/2), paddle.y + (paddle.HEIGHT/2), z - (paddle.DEPTH/2))
+    glVertex3d(paddle.x + (paddle.WIDTH/2), paddle.y + (paddle.HEIGHT/2), z - (paddle.DEPTH/2))
+    glVertex3d(paddle.x + (paddle.WIDTH/2), paddle.y - (paddle.HEIGHT/2), z - (paddle.DEPTH/2))
+    glVertex3d(paddle.x - (paddle.WIDTH/2), paddle.y - (paddle.HEIGHT/2), z - (paddle.DEPTH/2)) 
+    #LEFT
+    glVertex3d(paddle.x - (paddle.WIDTH/2), paddle.y + (paddle.HEIGHT/2), z - (paddle.DEPTH/2))
+    glVertex3d(paddle.x - (paddle.WIDTH/2), paddle.y + (paddle.HEIGHT/2), z + (paddle.DEPTH/2))
+    glVertex3d(paddle.x - (paddle.WIDTH/2), paddle.y - (paddle.HEIGHT/2), z + (paddle.DEPTH/2))
+    glVertex3d(paddle.x - (paddle.WIDTH/2), paddle.y - (paddle.HEIGHT/2), z - (paddle.DEPTH/2))
+    #RIGHT
+    glVertex3d(paddle.x + (paddle.WIDTH/2), paddle.y + (paddle.HEIGHT/2), z - (paddle.DEPTH/2))
+    glVertex3d(paddle.x + (paddle.WIDTH/2), paddle.y + (paddle.HEIGHT/2), z + (paddle.DEPTH/2))
+    glVertex3d(paddle.x + (paddle.WIDTH/2), paddle.y - (paddle.HEIGHT/2), z + (paddle.DEPTH/2))
+    glVertex3d(paddle.x + (paddle.WIDTH/2), paddle.y - (paddle.HEIGHT/2), z - (paddle.DEPTH/2))
+    #UP
+    glVertex3d(paddle.x - (paddle.WIDTH/2), paddle.y + (paddle.HEIGHT/2), z - (paddle.DEPTH/2))
+    glVertex3d(paddle.x + (paddle.WIDTH/2), paddle.y + (paddle.HEIGHT/2), z - (paddle.DEPTH/2))
+    glVertex3d(paddle.x + (paddle.WIDTH/2), paddle.y + (paddle.HEIGHT/2), z + (paddle.DEPTH/2))
+    glVertex3d(paddle.x - (paddle.WIDTH/2), paddle.y + (paddle.HEIGHT/2), z + (paddle.DEPTH/2))
+    #DOWN
+    glVertex3d(paddle.x - (paddle.WIDTH/2), paddle.y - (paddle.HEIGHT/2), z - (paddle.DEPTH/2))
+    glVertex3d(paddle.x + (paddle.WIDTH/2), paddle.y - (paddle.HEIGHT/2), z - (paddle.DEPTH/2))
+    glVertex3d(paddle.x + (paddle.WIDTH/2), paddle.y - (paddle.HEIGHT/2), z + (paddle.DEPTH/2))
+    glVertex3d(paddle.x - (paddle.WIDTH/2), paddle.y - (paddle.HEIGHT/2), z + (paddle.DEPTH/2))
+    glEnd()
+
+    glColor3f(0,255,0)
+
+    glBegin(GL_LINE_LOOP)
+    glVertex3d(paddle.x - (paddle.WIDTH/2), paddle.y + (paddle.HEIGHT/2), z - (paddle.DEPTH/2))
+    glVertex3d(paddle.x + (paddle.WIDTH/2), paddle.y + (paddle.HEIGHT/2), z - (paddle.DEPTH/2))
+    glVertex3d(paddle.x + (paddle.WIDTH/2), paddle.y - (paddle.HEIGHT/2), z - (paddle.DEPTH/2))
+    glVertex3d(paddle.x - (paddle.WIDTH/2), paddle.y - (paddle.HEIGHT/2), z - (paddle.DEPTH/2)) 
+    glEnd()
+
+    glBegin(GL_LINE_LOOP)
+    glVertex3d(paddle.x - (paddle.WIDTH/2), paddle.y + (paddle.HEIGHT/2), z + (paddle.DEPTH/2))
+    glVertex3d(paddle.x + (paddle.WIDTH/2), paddle.y + (paddle.HEIGHT/2), z + (paddle.DEPTH/2))
+    glVertex3d(paddle.x + (paddle.WIDTH/2), paddle.y - (paddle.HEIGHT/2), z + (paddle.DEPTH/2))
+    glVertex3d(paddle.x - (paddle.WIDTH/2), paddle.y - (paddle.HEIGHT/2), z + (paddle.DEPTH/2))
+    glEnd()  
+
+    glBegin(GL_LINES)
+    glVertex3d(paddle.x + (paddle.WIDTH/2), paddle.y + (paddle.HEIGHT/2), z + (paddle.DEPTH/2))
+    glVertex3d(paddle.x + (paddle.WIDTH/2), paddle.y + (paddle.HEIGHT/2), z - (paddle.DEPTH/2))
+    glEnd()
+
+    glBegin(GL_LINES)
+    glVertex3d(paddle.x + (paddle.WIDTH/2), paddle.y - (paddle.HEIGHT/2), z + (paddle.DEPTH/2))
+    glVertex3d(paddle.x + (paddle.WIDTH/2), paddle.y - (paddle.HEIGHT/2), z - (paddle.DEPTH/2))
+    glEnd()
+
+    glBegin(GL_LINES)
+    glVertex3d(paddle.x - (paddle.WIDTH/2), paddle.y + (paddle.HEIGHT/2), z + (paddle.DEPTH/2))
+    glVertex3d(paddle.x - (paddle.WIDTH/2), paddle.y + (paddle.HEIGHT/2), z - (paddle.DEPTH/2))
+    glEnd()
+
+    glBegin(GL_LINES)
+    glVertex3d(paddle.x - (paddle.WIDTH/2), paddle.y - (paddle.HEIGHT/2), z + (paddle.DEPTH/2))
+    glVertex3d(paddle.x - (paddle.WIDTH/2), paddle.y - (paddle.HEIGHT/2), z - (paddle.DEPTH/2))
+    glEnd()  
+
+    glColor3f(255,255,255)
+
+
+
+def draw_stage():
+    glBegin(GL_LINE_LOOP)
+    glVertex3d(-640,360,-2560)
+    glVertex3d(640,360,-2560)
+    glVertex3d(640,-360,-2560)
+    glVertex3d(-640,-360,-2560)
+    glEnd()
+    glBegin(GL_LINES)
+    glVertex3d(-640,360,0)
+    glVertex3d(-640,360,-2560)
+    glEnd()
+    glBegin(GL_LINES)
+    glVertex3d(640,360,0)
+    glVertex3d(640,360,-2560)
+    glEnd()
+    glBegin(GL_LINES)
+    glVertex3d(640,-360,-2560)
+    glVertex3d(640,-360,0)
+    glEnd()
+    glBegin(GL_LINES)
+    glVertex3d(-640,-360,0)
+    glVertex3d(-640,-360,-2560)
+    glEnd()
+
 def graphics_render():
     glClear(GL_COLOR_BUFFER_BIT)
     glLoadIdentity()
     glTranslatef(0,0,-565)
-    draw_circle(0,0,0,1,30)
-    draw_circle(4,0,-3,1,30)
+    draw_stage()
+    draw_paddle(Paddle(0))
 
 def graphics_resize(width, height):
     glViewport(0, 0, width, height)
     glMatrixMode(GL_PROJECTION)
     glLoadIdentity()
-    gluPerspective(65, width / float(height), .1, 1000)
+    gluPerspective(65, width / float(height), .1, 100000000)
     glMatrixMode(GL_MODELVIEW)
     return pyglet.event.EVENT_HANDLED
 
-#def draw_stage(stage):
+
+

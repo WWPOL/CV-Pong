@@ -8,18 +8,19 @@ class Ball:
         self.radius = radius
 
 class Stage:
-    DEPTH = 200
+    DEPTH = 2560
     def __init__(self):
         paddle0 = Paddle(0)
         paddle1 = Paddle(1)
 
 class Paddle:
-    HEIGHT = 50
-    WIDTH = 50
+    HEIGHT = 100
+    WIDTH = 200
+    DEPTH = 20
     def __init__(self, player_index):
         self.x = 0
         self.y = 0
         if player_index == 0:
             self.z = 0
         else:
-            self.z = Stage.DEPTH
+            self.z = (-1)*Stage.DEPTH
