@@ -2,7 +2,7 @@ var app = require('http').createServer();
 var io = require('socket.io')(app)
 
 var users = [];
-var userstates = {};
+var userReadyStates = {};
 var idToUser = {};
 
 var paddle1;
@@ -12,22 +12,24 @@ var ball;
 io.on('connection', function(socket) {
     console.log("User " + socket.id + " has joined.");
     users.push([socket.id]);
-    userstates[socket.id] = false;
+    userReadyStates[socket.id] = false;
     socket.emit("AssignId", socket.id, users.length);
+
     update();
 
     idToUser[socket.id] = users.length;
             
     socket.on("Ready", function() {
-        userstates[socket.id] = true;
+        userReadyStates[socket.id] = true;
         usersReady = true;
-        for (var user in userstates) {
-          if (userstates.hasOwnProperty(user)) {
-            if (user === false) {
-                usersReady = false;
+        for (var user in userReadyStates) {
+            if (userReadyStates.hasOwnProperty(user)) {
+                if (user === false) {
+                    usersReady = false;
+                }
             }
-          }
         }
+
         if (usersReady) {
             socket.emit("StartGame")
         }
@@ -52,6 +54,8 @@ app.listen((process.env.PORT || 8888), function() {
 });
 
 var update = function() {
+    performPhysics();
+
     var gameData = {
         ballX: ball.x,
         ballY: ball.y,
@@ -62,7 +66,7 @@ var update = function() {
     setTimeout(update, 15);
 }
 
-var performPhysics = function(data) {
+var performPhysics = function() {
     console.log("Beginning physics pass..."); 
     ball.x += ball.xVel;
     ball.y += ball.yVel;
