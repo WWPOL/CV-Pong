@@ -1,12 +1,6 @@
 import cv2
 import numpy as np
 
-cap = cv2.VideoCapture(0)
-# frame size: 640 x 480
-
-samples = []
-kernel = np.ones((2,2),np.uint8)
-
 def createMultipleThresholds(img):
 	#img = cv2.GaussianBlur(img, (7,7), 3)
 	combined_mask = np.zeros((img.shape[0], img.shape[1]), np.uint8) # start off with 2D array of zeros
@@ -45,7 +39,7 @@ def getContourMoment(contour):
 	m = cv2.moments(contour)
 	cx = int(m['m10']/m['m00'])
 	cy = int(m['m01']/m['m00'])
-	return (cx, cy)
+	return [cx, cy]
 
 
 
@@ -55,25 +49,59 @@ def getSample(event, x, y, flags, param):
 		print frame_hsv[y,x]
 		samples.append(frame_hsv[y,x])
 
-cv2.namedWindow("Frame")
-cv2.setMouseCallback("Frame", getSample)
-
-while True: 
+def captureImage(old):
 	frame = cap.read()[1]
 	frame = cv2.flip(frame, 1)
+	
+	global frame_hsv
 	frame_hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
 	# frame = cv2.GaussianBlur(frame, (7,7), 3)
 
 	threshold_mask = createMultipleThresholds(frame_hsv)
-	
+
+
+	position = [0, 0]
+	velocity = [0, 0]
+
 	contour = getLargestContour(threshold_mask)
 	if type(contour) != int:
 		cv2.drawContours(frame, contour, -1, (0, 255, 255), 2)
 		position = getContourMoment(contour)
-		cv2.circle(frame, position, 5, (0,0,255), -1)
+		cv2.circle(frame, (position[0], position[1]), 5, (0,0,255), -1)
 	
+	# calculate velocity
+	oldPosition = old[0]
+	velocity = [position[0] - oldPosition[0], position[1] - oldPosition[1]]
+	print velocity
+	# draw frames (remove if necessary)
 
 	cv2.imshow("Frame", frame) 
 	cv2.imshow("Combined Mask", threshold_mask)
+	cv2.waitKey(20) # ADJUST THIS DEPENDING ON FRAME DRAW RATE
 
-	cv2.waitKey(20)
+	# # scale position, velocity from 640 x 480 to 1280 x 720
+	# position[0] *= 2
+	# velocity[0] *= 2
+
+	# position[1] = int(position[1] * 1.5)
+	# velocity[1] = int(velocity[1] * 1.5)
+
+	# print [position, velocity]
+
+	return [position, velocity]
+
+
+cap = cv2.VideoCapture(0)
+# frame size: 640 x 480
+
+samples = []
+
+cv2.namedWindow("Frame")
+cv2.setMouseCallback("Frame", getSample)
+
+previousValues = [[0,0],[0,0]]
+
+while True: 
+	# print previousValues[0]
+	previousValues = captureImage(previousValues)	
+	# print previousValues[0]
