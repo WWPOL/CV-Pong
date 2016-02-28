@@ -23,3 +23,11 @@ def graphics_render():
     glTranslatef(0,0,-5)
     drawCircle(0,0,0,1,30)
     drawCircle(4,0,-3,1,30)
+
+def graphics_resize():
+	glViewport(0, 0, width, height)
+    glMatrixMode(GL_PROJECTION)
+    glLoadIdentity()
+    gluPerspective(65, width / float(height), .1, 1000)
+    glMatrixMode(GL_MODELVIEW)
+    return pyglet.event.EVENT_HANDLED

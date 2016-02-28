@@ -6,6 +6,7 @@ from objects import Stage
 from physics import Vector
 from meta import Player
 from graphics import graphics_render
+from graphics import graphics_resize
 
 window = pyglet.window.Window(width=1280, height=720)
 
@@ -25,12 +26,7 @@ def on_draw():
 
 @window.event
 def on_resize(width, height):
-    glViewport(0, 0, width, height)
-    glMatrixMode(GL_PROJECTION)
-    glLoadIdentity()
-    gluPerspective(65, width / float(height), .1, 1000)
-    glMatrixMode(GL_MODELVIEW)
-    return pyglet.event.EVENT_HANDLED
+    graphics_resize()
 
 start_match()
 pyglet.app.run()
