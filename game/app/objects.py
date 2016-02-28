@@ -10,7 +10,11 @@ class Ball:
         self.velocity.add(self.acceleration)
         self.position.add(self.velocity)
         if(((self.position.z + self.radius)  > stage.paddle0.z - 20 and (self.velocity.z > 0)) or (self.position.z -self.radius) < stage.paddle1.z + 20 and (self.velocity.z < 0)):
-            self.velocity.z *= -1.1
+            if(self.position.x > stage.paddle0.x - stage.paddle0.WIDTH/2 and self.position.x < stage.paddle0.x + stage.paddle0.WIDTH/2 and self.position.y > stage.paddle0.y - stage.paddle0.HEIGHT/2 and self.position.x < stage.paddle0.y + stage.paddle0.HEIGHT/2):
+                self.velocity.z *= -1.1
+            else:
+                self.velocity.z = 50
+                self.position = Vector(0,0,-500)
         if(((self.position.x - self.radius) < -640 and self.velocity.x < 0) or (self.position.x + self.radius) > 640 and self.velocity.x > 0):
             self.velocity.x *= -1
         if(((self.position.y - self.radius) < -360 and self.velocity.y < 0) or (self.position.y + self.radius) > 360 and self.velocity.y > 0):
@@ -21,7 +25,7 @@ class Stage:
     def __init__(self):
         self.paddle0 = Paddle(0)
         self.paddle1 = Paddle(1)
-        self.ball = Ball(Vector(0,0,500), Vector(-2, 1, 20), Vector(0,0,0), 50)
+        self.ball = Ball(Vector(0,0,-500), Vector(-2, 1, 50), Vector(0,0,0), 50)
 
 class Paddle:
     HEIGHT = 100
