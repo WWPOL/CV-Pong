@@ -1,10 +1,11 @@
 from physics import Vector 
 
 class Ball:
-    def __init__(self, position, velocity, acceleration):
-        self.position = Vector()
-        self.velocity = Vector()
-        self.acceleration = Vector()
+    def __init__(self, position, velocity, acceleration, radius):
+        self.position = position
+        self.velocity = velocity
+        self.acceleration = acceleration
+        self.radius = radius
 
 class Stage:
     DEPTH = 200

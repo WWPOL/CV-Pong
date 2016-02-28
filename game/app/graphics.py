@@ -1,15 +1,16 @@
 import math
 import pyglet
 from pyglet.gl import *
-def draw_circle(cx, cy, cz, r, num_segments):
+def draw_circle(ball):
+    num_segments = 30
     angle = 2 * math.pi / float(num_segments)
     tan = math.tan(angle)
     radial = math.cos(angle)
-    x = r
+    x = ball.radius
     y = 0
     glBegin(GL_LINE_LOOP)
     for i in range(0, num_segments):
-        glVertex3d(x + cx, y + cy, cz)
+        glVertex3d(x + ball.position.x, y + ball.position.y, ball.position.z)
         tx = -y
         ty = x
         x+=tx*tan
@@ -32,3 +33,5 @@ def graphics_resize(width, height):
     gluPerspective(65, width / float(height), .1, 1000)
     glMatrixMode(GL_MODELVIEW)
     return pyglet.event.EVENT_HANDLED
+
+#def draw_stage(stage):
