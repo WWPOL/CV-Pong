@@ -3,3 +3,13 @@ class Vector:
         self.x = x
         self.y = y
         self.z = z
+
+    def add(self, vector):
+        self.x += vector.x
+        self.y += vector.y
+        self.z += vector.z
+
+    def scale(self, scale):
+        self.x *= scale
+        self.y *= scale
+        self.z *= scale
