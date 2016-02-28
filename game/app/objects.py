@@ -9,19 +9,19 @@ class Ball:
     def update(self, stage):
         self.velocity.add(self.acceleration)
         self.position.add(self.velocity)
-        if self.z == 0:
-            if self.x >= paddle.x - Paddle.WIDTH / 2 and self.x <= paddle.x + Paddle.WIDTH / 2:
-                if self.y >= paddle.y - Paddle.HEIGHT / 2 and self.y <= paddle.y + Paddle.HEIGHT / 2:
-                    self.velocity.z *= -1
-        elif self.z >= DEPTH:
-            self.velocity.z *= -1
+        if(((self.position.z + self.radius)  > stage.paddle0.z - 20 and (self.velocity.z > 0)) or (self.position.z -self.radius) < stage.paddle1.z + 20 and (self.velocity.z < 0)):
+            self.velocity.z *= -1.1
+        if(((self.position.x - self.radius) < -640 and self.velocity.x < 0) or (self.position.x + self.radius) > 640 and self.velocity.x > 0):
+            self.velocity.x *= -1
+        if(((self.position.y - self.radius) < -360 and self.velocity.y < 0) or (self.position.y + self.radius) > 360 and self.velocity.y > 0):
+            self.velocity.y *= -1
 
 class Stage:
     DEPTH = 2560
     def __init__(self):
         self.paddle0 = Paddle(0)
         self.paddle1 = Paddle(1)
-        self.ball = Ball(Vector(), Vector(x=50, y=50, z=50), Vector(), 50)
+        self.ball = Ball(Vector(0,0,500), Vector(-2, 1, 20), Vector(0,0,0), 50)
 
 class Paddle:
     HEIGHT = 100
