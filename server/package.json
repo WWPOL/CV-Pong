@@ -1,0 +1,12 @@
+{
+  "name": "PROJECT-FIELD-PONY",
+  "version": "0.0.0",
+   "scripts": {
+    "start": "node index.js"
+  },
+  "description": "OpenCV Pong",
+  "dependencies": {
+    "debug": "^2.1.1",
+    "socket.io": "^1.1.0"
+  }
+}
