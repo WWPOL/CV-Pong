@@ -39,6 +39,7 @@ io.on('connection', function(socket) {
         userNumber = idToUser[socket.id];
         // Fuck my life.
         console.log(userNumber + ":" +  data);
+        console.log("Sending over");
         if (userNumber == 0) {
             io.to(users[1]).emit("OpponentPaddle", data);
         } else {
