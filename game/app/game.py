@@ -5,7 +5,6 @@ from pyglet.window import key
 from objects import Stage
 from physics import Vector
 from meta import Player
-
 window = pyglet.window.Window(width=1280, height=720)
 
 def start_match():
@@ -35,5 +34,6 @@ def on_resize(width, height):
     glMatrixMode(GL_MODELVIEW)
     return pyglet.event.EVENT_HANDLED
 
+client.establish()
 start_match()
 pyglet.app.run()
