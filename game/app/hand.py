@@ -6,7 +6,7 @@ class HandJob:
 		self.cap = cv2.VideoCapture(0)
 		self.samples = []
 
-		self.previousValues = [[0,0],[0,0]]
+		self.oldPosition = [0,0]
 
 		self.frame_hsv = 0 # just declare for now
 
@@ -77,9 +77,14 @@ class HandJob:
 			position = self.getContourMoment(contour)
 			cv2.circle(frame, (position[0], position[1]), 5, (0,0,255), -1)
 
+		# calculate velocity
+		velocity = [position[0] - self.oldPosition[0], position[1] - self.oldPosition[1]]
+		# print velocity
+
 		cv2.imshow("Frame", frame)
 		cv2.waitKey(10)
 
+		self.oldPosition = position
 		return [position, velocity]
 
 
