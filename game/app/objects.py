@@ -10,8 +10,8 @@ class Ball:
 class Stage:
     DEPTH = 2560
     def __init__(self):
-        paddle0 = Paddle(0)
-        paddle1 = Paddle(1)
+        self.paddle0 = Paddle(0)
+        self.paddle1 = Paddle(1)
 
 class Paddle:
     HEIGHT = 100

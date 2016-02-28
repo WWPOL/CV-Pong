@@ -15,9 +15,9 @@ class HandJob:
 	
 	def getSample(self, event, x, y, flags, param):
 		if event == cv2.EVENT_LBUTTONDOWN:
-			print "%d %d" % (x,y)
+			print("%d %d" % (x,y))
 			#print self.frame_hsv[y,x]
-			print "click"
+			print("click")
 			self.samples.append(self.frame_hsv[y,x])
 
 	def createMultipleThresholds(self, img):

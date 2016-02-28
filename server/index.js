@@ -37,9 +37,8 @@ io.on('connection', function(socket) {
 
     socket.on("UpdatePaddle", function(data) {
         userNumber = idToUser[socket.id];
-        
         // Fuck my life.
-        io.to(users[(idToUser[socket.id] - 1 % 2)].emit("OpponentPaddle", data);
+        io.to(users[idToUser[socket.id] - 1 % 2]).emit("OpponentPaddle", data);
     });
 
     socket.on("disconnect", function() {
@@ -54,26 +53,26 @@ app.listen((process.env.PORT || 8888), function() {
 });
 
 var update = function() {
-    performPhysics();
+    //performPhysics();
 
-    var gameData = {
-        ballX: ball.x,
-        ballY: ball.y,
-        ballZ: ball.z
-    };
+    //var gameData = {
+    //    ballX: ball.x,
+    //    ballY: ball.y,
+    //    ballZ: ball.z
+    //};
 
-    io.emit("BallData", gameData);
-    setTimeout(update, 15);
+    //io.emit("BallData", gameData);
+    //setTimeout(update, 15);
 }
 
-var performPhysics = function() {
-    console.log("Beginning physics pass..."); 
-    ball.x += ball.xVel;
-    ball.y += ball.yVel;
-    ball.z += ball.zVel;
-
-    if (ball.z == paddle0.z || ball.z == paddle1.z) {
-        // Reverse direction.
-        ball.zVel *= -1;
-    }
-}
+//var performPhysics = function() {
+//        console.log("Beginning physics pass..."); 
+//        ball.x += ball.xVel;
+//        ball.y += ball.yVel;
+//        ball.z += ball.zVel;
+//    
+//        if (ball.z == paddle0.z || ball.z == paddle1.z) {
+//            // Reverse direction.
+//            ball.zVel *= -1;
+//        }
+//    }
