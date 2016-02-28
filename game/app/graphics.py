@@ -12,6 +12,7 @@ def draw_circle(ball):
     radial = math.cos(angle)
     x = ball.radius
     y = 0
+    glColor3f(255,0,0)
     glBegin(GL_POLYGON)
     for i in range(0, num_segments):
         glVertex3d(x + ball.position.x, y + ball.position.y, ball.position.z)
@@ -22,7 +23,7 @@ def draw_circle(ball):
         x*=radial
         y*=radial
     glEnd()
-
+    glColor3f(255,255,255)
     x = ball.radius
     y = 0
     glBegin(GL_POLYGON)
@@ -153,8 +154,11 @@ def graphics_render(hand, stage):
     stage.paddle1.x = stage.ball.position.x
     stage.paddle1.y = stage.ball.position.y
     draw_stage()
-    draw_circle(stage.ball)
+
     draw_paddle(stage.paddle0)
+
+    draw_circle(stage.ball)
+    
     draw_paddle(stage.paddle1)
 
 def graphics_resize(width, height):
