@@ -61,28 +61,31 @@ class HandJob:
 		return [cx, cy]
 
 	def captureImage(self):
-		frame = self.cap.read()[1]
-		frame = cv2.flip(frame, 1)
-
-		self.frame_hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
-
-		threshold_mask = self.createMultipleThresholds(self.frame_hsv)
-
 		position = [0, 0]
 		velocity = [0, 0]
 
-		contour = self.getLargestContour(threshold_mask)
-		if type(contour) != int:
-			cv2.drawContours(frame, contour, -1, (0, 255, 255), 2)
-			position = self.getContourMoment(contour)
-			cv2.circle(frame, (position[0], position[1]), 5, (0,0,255), -1)
+		frame = self.cap.read()[1]
 
-		# calculate velocity
-		velocity = [position[0] - self.oldPosition[0], position[1] - self.oldPosition[1]]
-		# print velocity
+		if frame != None:
+			frame = cv2.flip(frame, 1)
 
-		cv2.imshow("Frame", frame)
-		cv2.waitKey(10)
+			self.frame_hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
+
+			threshold_mask = self.createMultipleThresholds(self.frame_hsv)
+
+
+			contour = self.getLargestContour(threshold_mask)
+			if type(contour) != int:
+				cv2.drawContours(frame, contour, -1, (0, 255, 255), 2)
+				position = self.getContourMoment(contour)
+				cv2.circle(frame, (position[0], position[1]), 5, (0,0,255), -1)
+
+			# calculate velocity
+			velocity = [position[0] - self.oldPosition[0], position[1] - self.oldPosition[1]]
+			# print velocity
+
+			cv2.imshow("Frame", frame)
+			cv2.waitKey(10)
 
 		self.oldPosition = position
 		return [position, velocity]
