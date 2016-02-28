@@ -1,6 +1,7 @@
 import pyglet
 from pyglet.window import key
 from pyglet.window import mouse
+import sys
 
 # Internal imports.
 from objects import Stage
@@ -43,7 +44,7 @@ def on_mouse_motion(x,y,dx,dy):
 	mouseY = y - window.height/2
 
 pyglet.clock.schedule_interval(render, 1/120.0)
-connection = Connection(stage)
+connection = Connection(stage, sys.argv[0])
 client_session = ClientSession(connection)
 client_session.start()
 pyglet.clock.schedule_interval(client_session.send_coordinates, 1/20.0)
