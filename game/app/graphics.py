@@ -23,6 +23,19 @@ def draw_circle(ball):
         y*=radial
     glEnd()
 
+    x = ball.radius
+    y = 0
+    glBegin(GL_POLYGON)
+    for i in range(0, num_segments):
+        glVertex3d(x + ball.position.x, -360, ball.position.z + y)
+        tx = -y
+        ty = x
+        x+=tx*tan
+        y+=ty*tan
+        x*=radial
+        y*=radial
+    glEnd()
+
 def draw_paddle(paddle):
     z = 0;
     if(paddle.z == 0):
