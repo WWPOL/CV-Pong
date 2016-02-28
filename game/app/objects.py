@@ -15,9 +15,9 @@ class Ball:
             if(self.position.x > stage.paddle0.x - stage.paddle0.WIDTH/2 and self.position.x < stage.paddle0.x + stage.paddle0.WIDTH/2 and self.position.y > stage.paddle0.y - stage.paddle0.HEIGHT/2 and self.position.x < stage.paddle0.y + stage.paddle0.HEIGHT/2):
                 self.velocity.z *= -1.1
                 if math.fabs(stage.paddle0.vx) > 10:
-                    self.acceleration.x = -1*stage.paddle0.vx
+                    self.acceleration.x = -1*stage.paddle0.vx/4
             else:
-                self.velocity.z = 50
+                self.velocity = Vector(0,0,50)
                 self.position = Vector(0,0,-1000)
         if (self.position.z -self.radius) < stage.paddle1.z + 20 and (self.velocity.z < 0):
             self.velocity.z *= -1.1
