@@ -34,8 +34,8 @@ class Stage:
         self.ball = Ball(Vector(0,0,-1000), Vector(-2, 1, 35), Vector(0,0,0), 50)
 
 class Paddle:
-    HEIGHT = 100
-    WIDTH = 200
+    HEIGHT = 200
+    WIDTH = 400
     DEPTH = 20
     def __init__(self, player_index):
         self.x = 0

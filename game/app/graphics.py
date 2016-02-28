@@ -12,7 +12,7 @@ def draw_circle(ball):
     radial = math.cos(angle)
     x = ball.radius
     y = 0
-    glBegin(GL_LINE_LOOP)
+    glBegin(GL_POLYGON)
     for i in range(0, num_segments):
         glVertex3d(x + ball.position.x, y + ball.position.y, ball.position.z)
         tx = -y
