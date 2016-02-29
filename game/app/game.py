@@ -10,9 +10,11 @@ from objects import Paddle
 from physics import Vector
 from graphics import graphics_render
 from graphics import graphics_resize
+from graphics import on_window_create
 from hand import HandJob
 
 window = pyglet.window.Window(width=1280, height=720)
+on_window_create()
 hand = HandJob()
 stage = Stage()
 

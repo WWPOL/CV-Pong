@@ -5,6 +5,10 @@ from objects import Ball
 from objects import Paddle
 from physics import Vector
 
+def on_window_create():
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
+    glEnable(GL_BLEND)
+
 def draw_circle(ball):
     num_segments = 30
     angle = 2 * math.pi / float(num_segments)
@@ -44,6 +48,7 @@ def draw_paddle(paddle):
     else:
         z = (paddle.z + paddle.DEPTH/2)
 
+    glColor4f(255,255,255,0.5)
     glBegin(GL_QUADS)
     #FRONT
     glVertex3d(paddle.x - (paddle.WIDTH/2), paddle.y + (paddle.HEIGHT/2), z + (paddle.DEPTH/2))
@@ -113,11 +118,11 @@ def draw_paddle(paddle):
     glVertex3d(paddle.x - (paddle.WIDTH/2), paddle.y - (paddle.HEIGHT/2), z - (paddle.DEPTH/2))
     glEnd()  
 
-    glColor3f(255,255,255)
 
 
 
 def draw_stage():
+    glColor3f(255,255,255)
     glBegin(GL_LINE_LOOP)
     glVertex3d(-640,360,-2560)
     glVertex3d(640,360,-2560)
@@ -168,6 +173,3 @@ def graphics_resize(width, height):
     gluPerspective(65, width / float(height), .1, 100000000)
     glMatrixMode(GL_MODELVIEW)
     return pyglet.event.EVENT_HANDLED
-
-
-
