@@ -8,7 +8,6 @@ import thread
 from objects import Stage
 from objects import Paddle
 from physics import Vector
-from meta import Player
 from graphics import graphics_render
 from graphics import graphics_resize
 from hand import HandJob
@@ -16,9 +15,6 @@ from hand import HandJob
 window = pyglet.window.Window(width=1280, height=720)
 hand = HandJob()
 stage = Stage()
-
-def start_match():
-    player1 = Player()
 
 def render(self):
     graphics_render(hand, stage)
