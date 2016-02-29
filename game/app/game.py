@@ -43,5 +43,5 @@ def on_mouse_motion(x,y,dx,dy):
     mouseX = x - window.width/2
     mouseY = y - window.height/2
 
-pyglet.clock.schedule_interval(render, 1/120.0)
+pyglet.clock.schedule_interval(render, 1/30.0)
 pyglet.app.run()
