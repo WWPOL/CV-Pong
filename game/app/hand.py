@@ -16,12 +16,10 @@ class HandJob:
 	def getSample(self, event, x, y, flags, param):
 		if event == cv2.EVENT_LBUTTONDOWN:
 			print("%d %d" % (x,y))
-			#print self.frame_hsv[y,x]
 			print("click")
 			self.samples.append(self.frame_hsv[y,x])
 
 	def createMultipleThresholds(self, img):
-		#img = cv2.GaussianBlur(img, (7,7), 3)
 		combined_mask = np.zeros((img.shape[0], img.shape[1]), np.uint8) # start off with 2D array of zeros
 		# range for HSV threshold:
 		range_hsv = np.array([1,50,50]) # give little flexibility in hue but more in sat & val (b/c lighting) -Philip
@@ -31,17 +29,11 @@ class HandJob:
 			mask = cv2.inRange(img, sample - range_hsv, sample + range_hsv)
 			combined_mask = combined_mask + mask
 
-		# combined_mask = cv2.erode(combined_mask, kernel, iterations=2)
-		# combined_mask = cv2.dilate(combined_mask, kernel, iterations=4)
 		combined_mask = cv2.medianBlur(combined_mask, 11)
 		return combined_mask
 
 	def getLargestContour(self, img):
 		contours, hierarchy = cv2.findContours(img.copy(), cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
-		# contourSizes = []
-		# for i, contour in enumerate(contours):
-		# 	size = cv2.contourArea(contour)
-		# 	contourSizes.append((i, size))
 		if len(contours) != 0:
 			largestContour = (contours[0], 0) # loop thru and find the largest contour & size
 			for contour in contours: 
@@ -49,7 +41,6 @@ class HandJob:
 				if size > largestContour[1]:
 					largestContour = (contour, size) 
 
-			#print largestContour
 			return largestContour[0]
 		else:
 			return 0
@@ -89,10 +80,3 @@ class HandJob:
 
 		self.oldPosition = position
 		return [position, velocity]
-
-
-
-# cam = HandJob()
-
-# while True:
-# 	cam.captureImage()
