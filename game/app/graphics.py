@@ -48,7 +48,28 @@ def draw_paddle(paddle):
     else:
         z = (paddle.z + paddle.DEPTH/2)
 
-    glColor4f(255,255,255,0.5)
+    # vertices = [(paddle.x + (paddle.WIDTH/2), paddle.y + (paddle.HEIGHT/2), z + (paddle.DEPTH/2),
+    #             (paddle.x - (paddle.WIDTH/2), paddle.y + (paddle.HEIGHT/2), z + (paddle.DEPTH/2),
+    #             (paddle.x - (paddle.WIDTH/2), paddle.y - (paddle.HEIGHT/2), z + (paddle.DEPTH/2),
+    #             (paddle.x + (paddle.WIDTH/2), paddle.y - (paddle.HEIGHT/2), z + (paddle.DEPTH/2),
+    #             (paddle.x + (paddle.WIDTH/2), paddle.y - (paddle.HEIGHT/2), z - (paddle.DEPTH/2),
+    #             (paddle.x + (paddle.WIDTH/2), paddle.y + (paddle.HEIGHT/2), z - (paddle.DEPTH/2),
+    #             (paddle.x - (paddle.WIDTH/2), paddle.y + (paddle.HEIGHT/2), z - (paddle.DEPTH/2),
+    #             (paddle.x - (paddle.WIDTH/2), paddle.y - (paddle.HEIGHT/2), z - (paddle.DEPTH/2)]
+
+    # indices = [0,1,2,3,
+    #            3,4,5,0,
+    #            0,1,6,5,
+    #            5,4,7,6,
+    #            6,1,2,7,
+    #            7,4,3,2]
+
+    # glColor4f(255,255,255,0.5)
+    # glEnableClientState(GL_VERTEX_ARRAY)
+    # glVertexPointer(3,GL_FLOAT,0,vertices)
+    # glDrawElements(GL_QUADS,24,GL_UNSIGNED_BYTE, indices)
+    # glDisableClientState(GL_VERTEX_ARRAY)
+    
     glBegin(GL_QUADS)
     #FRONT
     glVertex3d(paddle.x - (paddle.WIDTH/2), paddle.y + (paddle.HEIGHT/2), z + (paddle.DEPTH/2))
