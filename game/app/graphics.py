@@ -69,7 +69,7 @@ def draw_paddle(paddle):
     # glVertexPointer(3,GL_FLOAT,0,vertices)
     # glDrawElements(GL_QUADS,24,GL_UNSIGNED_BYTE, indices)
     # glDisableClientState(GL_VERTEX_ARRAY)
-    
+    glColor4f(255,255,255,0.4) 
     glBegin(GL_QUADS)
     #FRONT
     glVertex3d(paddle.x - (paddle.WIDTH/2), paddle.y + (paddle.HEIGHT/2), z + (paddle.DEPTH/2))
