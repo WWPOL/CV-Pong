@@ -5,9 +5,27 @@ var users = [];
 var userReadyStates = {};
 var idToUser = {};
 
-var paddle1;
-var paddle2;
-var ball;
+ball = {
+    r: 50,
+    x: 0,
+    y: 0,
+    z: -1280,
+    vx: .1,
+    vy: .8,
+    vz: .1
+};
+
+paddle0 = {
+    x: 0,
+    y: 0,
+    z: 0
+};
+
+paddle1 = {
+    x: 0,
+    y: 0,
+    z: -2560
+};
 
 io.on('connection', function(socket) {
     console.log("User " + socket.id + " has joined.");
@@ -40,6 +58,7 @@ io.on('connection', function(socket) {
         // Fuck my life.
         console.log(userNumber + ":" +  data);
         if (userNumber == 0) {
+            paddle0.x = 
             io.to(users[1]).emit("OpponentPaddle", data);
         } else {
             io.to(users[0]).emit("OpponentPaddle", data);
@@ -58,26 +77,22 @@ app.listen((process.env.PORT || 8888), function() {
 });
 
 var update = function() {
-    //performPhysics();
-
-    //var gameData = {
-    //    ballX: ball.x,
-    //    ballY: ball.y,
-    //    ballZ: ball.z
-    //};
-
-    //io.emit("BallData", gameData);
-    //setTimeout(update, 15);
+    performPhysics();
+    var gameData = {
+       "ballX": ball.x,
+       "ballY": ball.y,
+       "ballZ": ball.z
+    };
+    io.emit("BallData", gameData);
+    setTimeout(update, 15);
 }
 
 var performPhysics = function() {
-        console.log("Beginning physics pass..."); 
-        ball.x += ball.xVel;
-        ball.y += ball.yVel;
-        ball.z += ball.zVel;
-    
-        if (ball.z == paddle0.z || ball.z == paddle1.z) {
-            // Reverse direction.
-            ball.zVel *= -1;
-        }
+    if ((ball.z+ball.r == paddle0.z-20 && ball.vz > 0) || (ball.z-ball.r == paddle1.z+20 && ball.vz < 0)) {
+        // Reverse direction.
+        ball.zVel *= -1.1;
     }
+    ball.x += ball.vx;
+    ball.y += ball.vy;
+    ball.z += ball.vz;
+}

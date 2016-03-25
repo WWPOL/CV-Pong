@@ -149,8 +149,10 @@ def graphics_render(hand, stage):
     stage.paddle0.x = (position[0] * 2) - 640
     stage.paddle0.y = 360 - int(position[1] * 1.5)
     draw_stage()
-    draw_paddle(stage.paddle0)
     draw_paddle(stage.paddle1)
+    draw_paddle(stage.paddle0)
+    draw_circle(stage.ball)
+    print(stage.ball.position.z)
 
 def graphics_resize(width, height):
     glViewport(0, 0, width, height)

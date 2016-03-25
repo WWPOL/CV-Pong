@@ -20,7 +20,13 @@ class ClientSession(threading.Thread):
         self.connection.player = args[1]
     
     def on_ball_data(self, *args):
-        print(args[0])
+        print args[0]
+        # self.connection.stage.ball.position.x = args[0]["x"]
+        # self.connection.stage.ball.position.y = args[0]["y"]
+        # self.connection.stage.ball.position.z = args[0]["z"]
+        self.connection.stage.ball.position.x = args[0]["ballX"]
+        self.connection.stage.ball.position.y = args[0]["ballY"]
+        self.connection.stage.ball.position.z = args[0]["ballZ"]
 
     def on_opponent_paddle(self, *args):
         data = json.loads(args[0])
@@ -37,5 +43,5 @@ class ClientSession(threading.Thread):
             self.mainSocket.on('AssignId', self.on_assign_id)    
             self.mainSocket.on('BallData', self.on_ball_data)
             self.mainSocket.on('OpponentPaddle', self.on_opponent_paddle)
-            self.mainSocket.wait(seconds=.033)
+            self.mainSocket.wait(seconds=1)
         #check_coordinates()

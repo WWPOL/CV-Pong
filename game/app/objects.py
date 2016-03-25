@@ -12,6 +12,7 @@ class Stage:
     def __init__(self):
         self.paddle0 = Paddle(0)
         self.paddle1 = Paddle(1)
+        self.ball = Ball(Vector(0,0,0), Vector(0,0,0), Vector(0,0,0), 50)
 
 class Paddle:
     HEIGHT = 100
