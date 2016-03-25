@@ -56,7 +56,7 @@ io.on('connection', function(socket) {
     socket.on("UpdatePaddle", function(data) {
         userNumber = idToUser[socket.id];
         // Fuck my life.
-        console.log(userNumber + ":" +  data);
+        // console.log(userNumber + ":" +  data);
         if (userNumber == 0) {
             paddle0.x = 
             io.to(users[1]).emit("OpponentPaddle", data);

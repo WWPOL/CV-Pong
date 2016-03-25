@@ -152,7 +152,6 @@ def graphics_render(hand, stage):
     draw_paddle(stage.paddle1)
     draw_paddle(stage.paddle0)
     draw_circle(stage.ball)
-    print(stage.ball.position.z)
 
 def graphics_resize(width, height):
     glViewport(0, 0, width, height)
