@@ -10,9 +10,12 @@ ball = {
     x: 0,
     y: 0,
     z: -1280,
-    vx: .1,
-    vy: .8,
-    vz: .1
+    vx: 3,
+    vy: 2,
+    vz: 5,
+    ax: 0,
+    ay: 0,
+    az: 0
 };
 
 paddle0 = {
@@ -88,10 +91,20 @@ var update = function() {
 }
 
 var performPhysics = function() {
-    if ((ball.z+ball.r == paddle0.z-20 && ball.vz > 0) || (ball.z-ball.r == paddle1.z+20 && ball.vz < 0)) {
-        // Reverse direction.
-        ball.zVel *= -1.1;
+    if(((ball.z - ball.r < -2560) && (ball.vz < 0)) || ((ball.z + ball.r > 0) && ball.vz > 0)){
+        ball.vz *= -1
     }
+    if(((ball.x - ball.r < -640) && (ball.vx < 0)) || ((ball.x + ball.r > 640) && ball.vx > 0)){
+        ball.vx *= -1
+    }
+    if(((ball.y - ball.r < -360) && (ball.vy < 0)) || ((ball.y + ball.r > 360) && ball.vy > 0)){
+        ball.vy *= -1
+    }
+    
+    ball.vx += ball.ax
+    ball.vy += ball.ay
+    ball.vz += ball.az
+    ball.vz = Math.round(ball.vz)
     ball.x += ball.vx;
     ball.y += ball.vy;
     ball.z += ball.vz;

@@ -18,19 +18,25 @@ class ClientSession(threading.Thread):
     def on_assign_id(self, *args):
         self.connection.id = args[0]
         self.connection.player = args[1]
+        print("ID: " + str(self.connection.id))
+        print("PLAYER: " + str(self.connection.player))
     
     def on_ball_data(self, *args):
         #print args[0]
         # self.connection.stage.ball.position.x = args[0]["x"]
         # self.connection.stage.ball.position.y = args[0]["y"]
         # self.connection.stage.ball.position.z = args[0]["z"]
-        self.connection.stage.ball.position.x = args[0]["ballX"]
         self.connection.stage.ball.position.y = args[0]["ballY"]
-        self.connection.stage.ball.position.z = args[0]["ballZ"]
+        if(self.connection.player == 1):
+            self.connection.stage.ball.position.x = args[0]["ballX"]
+            self.connection.stage.ball.position.z = args[0]["ballZ"]
+        if(self.connection.player == 2):
+            self.connection.stage.ball.position.x = -1 * args[0]["ballX"]
+            self.connection.stage.ball.position.z = -2560 - args[0]["ballZ"]
 
     def on_opponent_paddle(self, *args):
         data = json.loads(args[0])
-        self.connection.stage.paddle1.x = data["x"]
+        self.connection.stage.paddle1.x = -1 * data["x"]
         self.connection.stage.paddle1.y = data["y"]
     
     def send_coordinates(self, *args):
