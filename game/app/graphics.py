@@ -5,6 +5,10 @@ from objects import Ball
 from objects import Paddle
 from physics import Vector
 
+def on_window_create():
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
+    glEnable(GL_BLEND)
+
 def draw_circle(ball):
     num_segments = 30
     angle = 2 * math.pi / float(num_segments)
@@ -12,7 +16,8 @@ def draw_circle(ball):
     radial = math.cos(angle)
     x = ball.radius
     y = 0
-    glBegin(GL_LINE_LOOP)
+    glColor3f(255,0,0)
+    glBegin(GL_POLYGON)
     for i in range(0, num_segments):
         glVertex3d(x + ball.position.x, y + ball.position.y, ball.position.z)
         tx = -y
@@ -22,7 +27,7 @@ def draw_circle(ball):
         x*=radial
         y*=radial
     glEnd()
-
+    glColor3f(255,255,255)
     x = ball.radius
     y = 0
     glBegin(GL_POLYGON)
@@ -43,6 +48,7 @@ def draw_paddle(paddle):
     else:
         z = (paddle.z + paddle.DEPTH/2)
 
+    glColor4f(255,255,255,0.4)
     glBegin(GL_QUADS)
     #FRONT
     glVertex3d(paddle.x - (paddle.WIDTH/2), paddle.y + (paddle.HEIGHT/2), z + (paddle.DEPTH/2))
@@ -112,11 +118,9 @@ def draw_paddle(paddle):
     glVertex3d(paddle.x - (paddle.WIDTH/2), paddle.y - (paddle.HEIGHT/2), z - (paddle.DEPTH/2))
     glEnd()  
 
-    glColor3f(255,255,255)
-
-
 
 def draw_stage():
+    glColor3f(255,255,255)
     glBegin(GL_LINE_LOOP)
     glVertex3d(-640,360,-2560)
     glVertex3d(640,360,-2560)
@@ -150,8 +154,9 @@ def graphics_render(hand, stage):
     stage.paddle0.y = 360 - int(position[1] * 1.5)
     draw_stage()
     draw_paddle(stage.paddle1)
-    draw_paddle(stage.paddle0)
     draw_circle(stage.ball)
+    draw_paddle(stage.paddle0)
+    
 
 def graphics_resize(width, height):
     glViewport(0, 0, width, height)

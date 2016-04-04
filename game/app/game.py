@@ -11,10 +11,12 @@ from physics import Vector
 from meta import Player
 from graphics import graphics_render
 from graphics import graphics_resize
+from graphics import on_window_create
 from hand import HandJob
 from client import Connection, ClientSession 
 
 window = pyglet.window.Window(width=1280, height=720)
+on_window_create()
 hand = HandJob()
 stage = Stage()
 
