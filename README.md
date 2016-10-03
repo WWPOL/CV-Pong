@@ -8,10 +8,9 @@ Your goal is to move your hand to control your paddle and beat your opponent. Be
 
 Requires OpenCV 2.4 or 3 and Pyglet 1.
 
+[ **Game demo video**](http://i.imgur.com/fIPxxGI.gif)
 
 ![Game demo still picture](http://i.imgur.com/mkMdFDX.png)
-
-[Game demo video](http://i.imgur.com/fIPxxGI.gif)
 
 ##Technical Details
 We used the OpenCV computer vision library to implement hand control via webcam. The program uses the sampled points the user provides to generate multiple threshold masks, which are then merged into one large mask, which is more resilient to adverse lighting conditions. The centroid of the largest contour of the mask is used as the paddle position. The multiple thresholds allow for robust object detection despite webcam noise and suboptimal lighting conditions.
